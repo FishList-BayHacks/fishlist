@@ -12,6 +12,17 @@ const HomePageContainer = styled.div`
   justify-content: center;
   position: relative;
   height: 100vh;
+  overflow: hidden;
+`;
+
+const BackgroundOverlay = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.17); /* Adjust the opacity as needed */
+  z-index: 1;
 `;
 
 const BackgroundVideo = styled.video`
@@ -19,6 +30,7 @@ const BackgroundVideo = styled.video`
   min-width: 100%;
   min-height: 100%;
   z-index: -1;
+  object-fit: cover;
 `;
 
 const Content = styled.div`
@@ -28,6 +40,9 @@ const Content = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding: 20px;
+  max-height: 100%;
+  overflow: auto;
 
   .title {
     align-items: center;
@@ -36,7 +51,8 @@ const Content = styled.div`
 `;
 
 const FormCard = styled(Card)`
-  min-width: 430px;
+  width: 100%;
+  max-width: 430px;
   margin-top: 20px;
   text-align: center;
 
@@ -53,17 +69,21 @@ const FormCard = styled(Card)`
   .text-field {
     text-align: left;
   }
+  @media (max-width: 500px) {
+    max-width: 300px;
+  }
 `;
 
 const HomePage = () => {
   return (
     <HomePageContainer>
+      <BackgroundOverlay />
       <BackgroundVideo autoPlay muted loop poster="./landingvideo.png">
-        <source src="./AdobeStock_738972167.mp4" type="video/mp4" />
+        <source src="./landingPageVideoSmallSize.mp4" type="video/mp4" />
         Your browser does not support the video tag.
       </BackgroundVideo>
       <Content>
-        <h1 className="title">Welcome to FishList</h1>
+        {/* <h1 className="title">Welcome to FishList</h1> */}
         <Formik
           initialValues={{ location: "" }}
           validate={(values) => {
