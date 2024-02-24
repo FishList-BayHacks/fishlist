@@ -59,7 +59,7 @@ const HomePage = () => {
   return (
     <HomePageContainer>
       <BackgroundVideo autoPlay muted loop poster="./landingvideo.png">
-        <source src="./background.mp4" type="video/mp4" />
+        <source src="./AdobeStock_738972167.mp4" type="video/mp4" />
         Your browser does not support the video tag.
       </BackgroundVideo>
       <Content>
