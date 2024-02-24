@@ -14,6 +14,20 @@ const theme = createTheme({
     },
     // Add more customizations as needed
   },
+  components: {
+    MuiCard: {
+      styleOverrides: {
+        root: {
+          background: "rgba(255, 255, 255, 0.55)",
+          boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)",
+          backdropFilter: "blur(11px)",
+          WebkitBackdropFilter: "blur(11px)",
+          borderRadius: "10px",
+          border: "1px solid rgba(255, 255, 255, 0.18)",
+        },
+      },
+    },
+  },
   // Add other theme customizations (typography, breakpoints, etc.) here
 });
 

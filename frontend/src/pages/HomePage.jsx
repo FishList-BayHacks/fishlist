@@ -38,13 +38,6 @@ const Content = styled.div`
 const FormCard = styled(Card)`
   width: 300px;
   margin-top: 20px;
-
-  background: rgba(255, 255, 255, 0.55) !important;
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37) !important;
-  backdrop-filter: blur(11px) !important;
-  -webkit-backdrop-filter: blur(11px) !important;
-  border-radius: 10px !important;
-  border: 1px solid rgba(255, 255, 255, 0.18) !important;
 `;
 
 const HomePage = () => {
