@@ -36,8 +36,23 @@ const Content = styled.div`
 `;
 
 const FormCard = styled(Card)`
-  width: 300px;
+  min-width: 430px;
   margin-top: 20px;
+  text-align: center;
+
+  .button {
+    margin-top: 20px;
+    border-radius: 20px;
+    width: 100px;
+  }
+
+  .form {
+    flex-direction: column;
+    justify-content: center;
+  }
+  .text-field {
+    text-align: left;
+  }
 `;
 
 const HomePage = () => {
@@ -76,7 +91,8 @@ const HomePage = () => {
           }) => (
             <FormCard>
               <CardContent>
-                <form onSubmit={handleSubmit}>
+                <h3>Where do you plan to dive?</h3>
+                <form className="form" onSubmit={handleSubmit}>
                   <TextField
                     select
                     fullWidth
@@ -88,6 +104,7 @@ const HomePage = () => {
                     error={touched.location && Boolean(errors.location)}
                     helperText={touched.location && errors.location}
                     margin="normal"
+                    className="text-field"
                   >
                     <MenuItem value="Location1">Location1</MenuItem>
                     <MenuItem value="Location2">Location2</MenuItem>
@@ -98,6 +115,7 @@ const HomePage = () => {
                     color="primary"
                     disabled={isSubmitting}
                     fullWidth
+                    className="button"
                   >
                     Dive
                   </Button>
