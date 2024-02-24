@@ -4,7 +4,7 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import MenuItem from "@mui/material/MenuItem";
+import Autocomplete from "@mui/material/Autocomplete";
 
 const HomePageContainer = styled.div`
   display: flex;
@@ -21,7 +21,7 @@ const BackgroundOverlay = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(255, 255, 255, 0.17); /* Adjust the opacity as needed */
+  background: rgba(0, 0, 0, 0.35); /* Adjust the opacity as needed */
   z-index: 1;
 `;
 
@@ -58,8 +58,6 @@ const FormCard = styled(Card)`
 
   .button {
     margin-top: 20px;
-    border-radius: 20px;
-    width: 100px;
   }
 
   .form {
@@ -104,35 +102,38 @@ const HomePage = () => {
             values,
             errors,
             touched,
-            handleChange,
             handleBlur,
             handleSubmit,
             isSubmitting,
+            setFieldValue,
           }) => (
             <FormCard>
               <CardContent>
                 <h3>Where do you plan to dive?</h3>
                 <form className="form" onSubmit={handleSubmit}>
-                  <TextField
-                    select
-                    fullWidth
-                    label="Location"
-                    name="location"
+                  <Autocomplete
+                    options={["Location1", "Location2"]} // Add more locations as needed
                     value={values.location}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    error={touched.location && Boolean(errors.location)}
-                    helperText={touched.location && errors.location}
-                    margin="normal"
-                    className="text-field"
-                  >
-                    <MenuItem value="Location1">Location1</MenuItem>
-                    <MenuItem value="Location2">Location2</MenuItem>
-                  </TextField>
+                    onChange={(event, newValue) => {
+                      setFieldValue("location", newValue);
+                    }}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        label="Location"
+                        name="location"
+                        onBlur={handleBlur}
+                        error={touched.location && Boolean(errors.location)}
+                        helperText={touched.location && errors.location}
+                        margin="normal"
+                        fullWidth
+                      />
+                    )}
+                  />
                   <Button
                     type="submit"
                     variant="contained"
-                    color="primary"
+                    color="primaryButton"
                     disabled={isSubmitting}
                     fullWidth
                     className="button"
