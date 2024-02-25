@@ -5,19 +5,18 @@ import {
   ListItemText,
   Paper,
   TextField,
-  Tooltip,
   Typography,
 } from "@mui/material";
+import { useNavigate, useParams } from "react-router-dom";
 
-import { FaStar } from "react-icons/fa";
 import { IoFish } from "react-icons/io5";
 import floridaCountyImage from "../assets/floridaMapDev.jpeg";
 import styled from "styled-components";
-import { useParams } from "react-router-dom";
 import { useState } from "react";
 
 export default function DiveSitesPage() {
   const { county } = useParams();
+  const navigate = useNavigate();
 
   const divefakedata = [
     { id: 1, name: "site 1 here", county: "pinellas" },
@@ -32,8 +31,6 @@ export default function DiveSitesPage() {
     // TODO THESE SHOULD EXIST IN CONTEXT FETCHED ON LOAD OF APP
   ];
 
-  const [userFavoriteSites, setUserFavoriteSites] = useState([1, 3]);
-
   const [searchValue, setSearchValue] = useState(county);
   const [selectedCounty, setSelectedCounty] = useState(
     counties.find((cy) => cy.label === county)
@@ -43,16 +40,6 @@ export default function DiveSitesPage() {
     // TODO add api call to fetch new dive sites
   };
 
-  const handleFavoriteClick = async ({ isFavorited, siteId }) => {
-    let updatedFavorites;
-    if (isFavorited) {
-      updatedFavorites = userFavoriteSites.filter((id) => id !== siteId);
-    } else {
-      updatedFavorites = [...userFavoriteSites, siteId];
-    }
-    setUserFavoriteSites(updatedFavorites);
-    // TODO ADD API CALL TO UPDATE THE FAVORITE DIVE SPOTS
-  };
   return (
     <BackgroundColorDiv>
       <BackgroundContainer />
@@ -116,24 +103,17 @@ export default function DiveSitesPage() {
             </TitleContainer>
           </DiveSitesHeader>
           {divefakedata.map((site) => {
-            const isFavorited = userFavoriteSites.includes(site.id);
-
             return (
-              <StyledCard key={site.id}>
+              <StyledCard
+                onClick={() => {
+                  navigate(`/divesite-fish/${selectedCounty.label}/${site.id}`);
+                }}
+                key={site.id}
+              >
                 <DiveSiteNameDiv>
                   <IoFish size={24} />
                   <ListItemText sx={{ color: "#E6F2F2" }} primary={site.name} />
                 </DiveSiteNameDiv>
-                <Tooltip placement="top" title="Favorite">
-                  <div
-                    style={{ display: "inline-flex" }}
-                    onClick={() =>
-                      handleFavoriteClick({ isFavorited, siteId: site.id })
-                    }
-                  >
-                    <FaStar color={isFavorited ? "yellow" : "gray"} size={24} />
-                  </div>
-                </Tooltip>
               </StyledCard>
             );
           })}
@@ -217,14 +197,14 @@ const StyledButton = styled(Button)`
       0.8
     ) !important; /* Slightly darker on hover */
   }
-  height: 56px; /* Ensuring it matches the TextField height */
+  height: 37px; /* Ensuring it matches the TextField height */
 `;
 
 const DiveSitesContainer = styled.div`
   padding: 16px;
   border-radius: 5px;
-  margin-top: 15px;
-  background-color: #c8e0f4 !important;
+  margin-top: 30px;
+  background-color: #bee4f9 !important;
 `;
 
 const DiveSitesHeader = styled.div`
