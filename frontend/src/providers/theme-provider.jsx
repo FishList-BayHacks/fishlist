@@ -35,6 +35,8 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           borderRadius: "20px",
+          fontFamily: "Quicksand",
+          fontWeight: 700,
           width: "100px",
           "&:hover": {
             backgroundColor: "#38B7D2",

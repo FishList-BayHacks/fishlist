@@ -1,2 +1,2 @@
 
-SELECT * FROM user_fishlist
+SELECT * FROM fishes
