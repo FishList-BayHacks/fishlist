@@ -90,7 +90,6 @@ export default function DiveSitesPage() {
           <DiveSitesHeader>
             <TitleContainer>
               <TopLine variant="h4">Diving Areas</TopLine>
-              {/* TODO CHECK IF WE USING LABEL OR NAME ETC */}
               <BottomLine variant="h4">
                 of {selectedCounty.county_name} County
               </BottomLine>
@@ -100,7 +99,9 @@ export default function DiveSitesPage() {
             return (
               <StyledCard
                 onClick={() => {
-                  navigate(`/divesite-fish/${selectedCounty.label}/${site.id}`);
+                  navigate(
+                    `/divesite-fish/${selectedCounty.county_name}/${site.id}`
+                  );
                 }}
                 key={site.id}
               >

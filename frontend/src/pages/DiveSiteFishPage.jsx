@@ -1,11 +1,16 @@
-import { Card, CardContent, CardMedia, Typography } from "@mui/material";
+import { Box, Card, CardContent, CardMedia, Typography } from "@mui/material";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
 
 export default function DiveSiteFishPage() {
   const { county } = useParams();
+  const userFishSeenList = [2];
   // TODO FETCH FISH BY COUNTY
+  // FETCH USER INFO ON LOAD OF THE APP AND USE FISH SEEN LIST TO DETERMINE ICON
+  // AND SETUP FUNCTION TO INSERT THE ID OF FISH SEEN INTO ARRAY AND REMOVE FISH ID FROM ARRAY AND THEN UPDATE/DELETE THAT ID FROM DB
+
   // id,common_name,scientific_name,image_url,county,freshwater,saltwater,Url,description
   const fishData = [
     {
@@ -58,6 +63,8 @@ export default function DiveSiteFishPage() {
     },
   ];
 
+  const toggleSeen = () => {};
+
   return (
     <WholePageContainer>
       <BackgroundOverlay />
@@ -70,8 +77,12 @@ export default function DiveSiteFishPage() {
         <CountyFishTitle>{county} County Fish</CountyFishTitle>
         <FishCardsContainer>
           {fishData.map((fish) => {
+            let seen = false;
+            if (userFishSeenList.includes(fish.id)) {
+              seen = true;
+            }
             return (
-              <Card key={fish.id} sx={{ maxWidth: 345 }}>
+              <Card sx={{ maxWidth: 345 }} key={fish.id}>
                 <CardMedia
                   component="img"
                   height="140"
@@ -79,11 +90,36 @@ export default function DiveSiteFishPage() {
                   alt={fish.common_name}
                 />
                 <CardContent>
-                  <Typography gutterBottom variant="h5" component="div">
-                    {fish.common_name}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    <i>{fish.scientific_name}</i>
+                  <Box
+                    display="flex"
+                    justifyContent="space-between"
+                    alignItems="center"
+                  >
+                    <Typography gutterBottom variant="h5" component="div">
+                      {fish.common_name}
+                    </Typography>
+                    {seen ? (
+                      <FaEye
+                        title="Seen"
+                        size={25}
+                        onClick={() => toggleSeen(fish.id)}
+                        style={{ cursor: "pointer" }}
+                      />
+                    ) : (
+                      <FaEyeSlash
+                        title="Unseen"
+                        size={25}
+                        onClick={() => toggleSeen(fish.id)}
+                        style={{ cursor: "pointer" }}
+                      />
+                    )}
+                  </Box>
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    style={{ fontStyle: "italic" }}
+                  >
+                    {fish.scientific_name}
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
                     {fish.description}
@@ -93,7 +129,6 @@ export default function DiveSiteFishPage() {
             );
           })}
         </FishCardsContainer>
-        <div>test here</div>
       </TitlesContainer>
     </WholePageContainer>
   );
@@ -110,12 +145,12 @@ const WholePageContainer = styled.div`
 `;
 
 const BackgroundOverlay = styled.div`
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.35); /* Adjust the opacity as needed */
+  background: rgba(0, 0, 0, 0.35);
   z-index: 1;
   height: 100%;
 `;
@@ -139,6 +174,7 @@ const TitlesContainer = styled.div`
   text-align: center;
   max-height: 20vh;
   width: 100vw;
+  z-index: 10;
 `;
 
 const DiscoverTitle = styled.h1`
@@ -166,10 +202,8 @@ const FishCardsContainer = styled.div`
   flex-wrap: wrap;
   justify-content: center;
   gap: 20px;
-  overflow-y: auto;
   padding: 20px;
   margin-top: 20px;
   max-height: calc(100vh - 250px);
   width: 100%;
-  overflow-y: auto;
 `;
