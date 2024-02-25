@@ -1,3 +1,2 @@
 
-
-SELECT * FROM dive_sites
+SELECT * FROM user_fishlist
