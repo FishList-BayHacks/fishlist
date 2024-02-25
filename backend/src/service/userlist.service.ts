@@ -5,7 +5,7 @@ import { UserList } from "src/entities/userlist.entity";
 @Injectable()
 export class UserlistService {
     constructor(
-        @Inject('DIVESITES_REPOSITORY')
+        @Inject('USERLIST_REPOSITORY')
         private userlistRepository:Repository<UserList>,
     ){}
 
