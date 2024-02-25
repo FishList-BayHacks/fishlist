@@ -56,6 +56,13 @@ const theme = createTheme({
     },
     MuiAutocomplete: {
       styleOverrides: {
+        root: {
+          "&:hover .MuiInputLabel-shrink": {
+            borderTop: "1.5px solid #000",
+            borderRight: "1.5px solid #000",
+            borderLeft: "1.5px solid #000",
+          },
+        },
         paper: {
           backgroundColor: "#ACFEFF",
           borderRadius: "10px",
@@ -91,18 +98,18 @@ const theme = createTheme({
           background: "#ACFEFF",
           padding: "0px 5px 4px 5px",
           borderRadius: "10px",
-          borderTop: "1.5px solid rgba(0, 0, 0, 0.23)",
-          borderRight: "1.5px solid rgba(0, 0, 0, 0.23)",
-          borderLeft: "1.5px solid rgba(0, 0, 0, 0.23)",
+          borderTop: "2px solid rgba(0, 0, 0, 0.23)",
+          borderRight: "2px solid rgba(0, 0, 0, 0.23)",
+          borderLeft: "2px solid rgba(0, 0, 0, 0.23)",
           "&.Mui-focused": {
-            borderTop: "2px solid #000",
-            borderRight: "2px solid #000",
-            borderLeft: "2px solid #000",
+            borderTop: "2px solid #000 !important",
+            borderRight: "2px solid #000 !important",
+            borderLeft: "2px solid #000 !important",
           },
           "&.Mui-error": {
-            borderTop: "2px solid #d32f2f",
-            borderRight: "2px solid #d32f2f",
-            borderLeft: "2px solid #d32f2f",
+            borderTop: "2px solid #d32f2f !important",
+            borderRight: "2px solid #d32f2f !important",
+            borderLeft: "2px solid #d32f2f !important",
           },
         },
       },
