@@ -15,7 +15,6 @@ import styled from "styled-components";
 import { useDiveSites } from "../hooks/useDiveSites";
 import { useMainContext } from "../context/Context";
 import { useState } from "react";
-import { useDiveSites } from "../hooks/useDiveSites";
 import { NavBar } from "../component/NavBar";
 
 export default function DiveSitesPage() {
