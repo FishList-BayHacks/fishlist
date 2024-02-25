@@ -56,6 +56,7 @@ export default function DiveSitesPage({ county = "Pinellas" }) {
       <StyledContainer>
         <SearchBarDiv>
           <Autocomplete
+            disableClearable
             sx={{ width: "80%" }}
             value={selectedCounty}
             onChange={(event, newValue) => {
@@ -105,7 +106,10 @@ export default function DiveSitesPage({ county = "Pinellas" }) {
           <DiveSitesHeader>
             <TitleContainer>
               <TopLine variant="h4">Diving Areas</TopLine>
-              <BottomLine variant="h4">of {county} County</BottomLine>
+              {/* TODO CHECK IF WE USING LABEL OR NAME ETC */}
+              <BottomLine variant="h4">
+                of {selectedCounty.label} County
+              </BottomLine>
             </TitleContainer>
           </DiveSitesHeader>
           {divefakedata.map((site) => {
