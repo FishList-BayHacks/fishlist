@@ -7,6 +7,7 @@ import HomePage from "./pages/HomePage";
 import { MainProvider } from "./context/Context";
 import NotFoundPage from "./pages/NotFoundPage";
 import ThemeProvider from "./providers/theme-provider";
+import FishList from "./pages/FishListPage";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
               path="/divesite-fish/:county/:siteId"
               element={<DiveSiteFishPage />}
             />
+            <Route path="/fish-list" element={<FishList />} />
           </Routes>
         </Router>
       </ThemeProvider>
