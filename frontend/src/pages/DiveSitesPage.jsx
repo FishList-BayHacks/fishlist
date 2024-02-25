@@ -14,17 +14,14 @@ import floridaCountyImage from "../assets/floridaMapDev.jpeg";
 import styled from "styled-components";
 import { useMainContext } from "../context/Context";
 import { useState } from "react";
+import { useDiveSites } from "../hooks/useDiveSites";
 
 export default function DiveSitesPage() {
   const { county } = useParams();
   const navigate = useNavigate();
   const { counties } = useMainContext();
+  const { diveSites, refetch } = useDiveSites(county);
 
-  const divefakedata = [
-    { id: 1, name: "site 1 here", county: "pinellas" },
-    { id: 2, name: "site 1 here", county: "pinellas" },
-    { id: 3, name: "site 1 here", county: "pinellas" },
-  ];
   // TODO USE EFFECT FETCHING DIVE SPOTS BY QUERY STRING THAT IS PASSED IN
 
   const [searchValue, setSearchValue] = useState(county);
@@ -34,6 +31,7 @@ export default function DiveSitesPage() {
 
   const handleSearch = () => {
     // TODO add api call to fetch new dive sites
+    refetch(selectedCounty.county_name);
   };
 
   return (
@@ -86,7 +84,7 @@ export default function DiveSitesPage() {
               <Paper style={{ backgroundColor: "#E6F2F2" }}>{children}</Paper> // For the dropdown background
             )}
           />
-          <StyledButton onClick={handleSearch}>Search</StyledButton>
+          <StyledButton onClick={() => handleSearch()}>Search</StyledButton>
         </SearchBarDiv>
         <DiveSitesContainer>
           <DiveSitesHeader>
@@ -98,7 +96,7 @@ export default function DiveSitesPage() {
               </BottomLine>
             </TitleContainer>
           </DiveSitesHeader>
-          {divefakedata.map((site) => {
+          {diveSites.map((site) => {
             return (
               <StyledCard
                 onClick={() => {
@@ -108,11 +106,20 @@ export default function DiveSitesPage() {
               >
                 <DiveSiteNameDiv>
                   <IoFish size={24} />
-                  <ListItemText sx={{ color: "#E6F2F2" }} primary={site.name} />
+                  <ListItemText
+                    sx={{ color: "#E6F2F2" }}
+                    primary={site.site_name}
+                  />
                 </DiveSiteNameDiv>
               </StyledCard>
             );
           })}
+          {diveSites.length === 0 && (
+            <p className="no-data">
+              Looks like the fish are playing hide and seek! No dive sites found
+              in this county. Keep exploring!
+            </p>
+          )}
         </DiveSitesContainer>
       </StyledContainer>
     </BackgroundColorDiv>
@@ -201,6 +208,11 @@ const DiveSitesContainer = styled.div`
   border-radius: 5px;
   margin-top: 30px;
   background-color: #bee4f9 !important;
+  .no-data {
+    color: #022a39;
+    text-align: center;
+    padding: 20px 20px 0px 20px;
+  }
 `;
 
 const DiveSitesHeader = styled.div`
