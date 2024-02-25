@@ -39,6 +39,7 @@ export const MainProvider = ({ children }) => {
         initializeUserSeenFishList,
         addFishIdToSeenList,
         removeFishIdOnSeenList,
+        usersSeenList,
       }}
     >
       {children}
