@@ -14,6 +14,11 @@ CREATE TABLE IF NOT EXISTS dive_sites (
   county_name VARCHAR(255) NOT NULL
 );
 
+SELECT pg_ls_dir('/docker-entrypoint-initdb.d/');
+
+-- Load data from CSV file
+COPY dive_sites FROM '/docker-entrypoint-initdb.d/data/Florida-Dive-Sites.csv' DELIMITER ',' CSV HEADER;
+
 
 CREATE TABLE IF NOT EXISTS counties (
   id   INT PRIMARY KEY,
@@ -27,3 +32,6 @@ CREATE TABLE IF NOT EXISTS counties (
   lon DECIMAL NOT NULL,
   population INT
 );
+
+-- Load data from CSV file
+COPY counties FROM '/docker-entrypoint-initdb.d/data/florida-counties.csv' DELIMITER ',' CSV HEADER;
