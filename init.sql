@@ -48,8 +48,9 @@ CREATE TABLE IF NOT EXISTS fishes (
     image_url VARCHAR,
     county TEXT[] NOT NULL,
     freshwater BOOLEAN,
-    saltwater BOOLEAN
-
+    saltwater BOOLEAN,
+    url VARCHAR,
+    description VARCHAR
 );
 
 -- Load data from CSV file
