@@ -11,6 +11,9 @@ services:
       - "5432:5432"
     volumes:
       - fishlist_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./data:/docker-entrypoint-initdb.d/data 
+
     restart: unless-stopped
 
 volumes:
