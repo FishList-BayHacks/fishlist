@@ -1,6 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
 
-@Entity()
+@Entity("fishes")
 export class Fish{
     @PrimaryGeneratedColumn()
     id: number;
@@ -14,7 +14,7 @@ export class Fish{
     @Column()
     image_url: string;
 
-    @Column()
+    @Column("text", {array: true})
     county: string[];
 
     @Column()

@@ -11,12 +11,12 @@ export class UserList {
     @Column()
     password_hash: string;
 
-    @Column()
+    @Column("text", {array: true})
     favorite_dive_sites: string[]
 
-    @Column({ length: 255})
-    fish_list_id: string[];
+    @Column("int", { array: true})
+    fish_list_id: number[];
 
-    @Column()
-    fish_seen_id: string[];
+    @Column("int", { array: true})
+    fish_seen_id: number[];
 }

@@ -1,9 +1,9 @@
 import { DataSource } from "typeorm";
 import { Fish } from "src/entities/fishes.entity";
 
-export const divesitesProviders = [
+export const fishProviders = [
     {
-        provide: 'DIVESITES_REPOSITORY',
+        provide: 'FISHES_REPOSITORY',
         useFactory: (datasource: DataSource) => datasource.getRepository(Fish),
         inject: ['DATA_SOURCE']
     }

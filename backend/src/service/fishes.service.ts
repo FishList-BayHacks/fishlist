@@ -3,13 +3,13 @@ import { Repository } from "typeorm";
 import { Fish } from "src/entities/fishes.entity";
 
 @Injectable()
-export class UserlistService {
+export class FishService {
     constructor(
-        @Inject('USERLIST_REPOSITORY')
-        private userlistRepository:Repository<Fish>,
+        @Inject('FISHES_REPOSITORY')
+        private fishRepository:Repository<Fish>,
     ){}
 
     async findAll(): Promise<Fish[]> {
-        return this.userlistRepository.find();
+        return this.fishRepository.find();
     }
 } 

@@ -1,6 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
 
-@Entity()
+@Entity("dive_sites")
 export class Divesites {
     @PrimaryGeneratedColumn()
     id: number;
