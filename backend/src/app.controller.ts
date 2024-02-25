@@ -6,15 +6,10 @@ import { Counties } from './entities/counties.entity';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService, private readonly countieService: CountieService) {}
+  constructor(private readonly appService: AppService) {}
 
   @Get()
   getHello(): string {
     return this.appService.getHello();
-  }
-
-  @Get("/counties")
-  async getCounties(): Promise<Counties[]> {
-    return await this.countieService.findAll();
   }
 }
