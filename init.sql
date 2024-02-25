@@ -1,9 +1,15 @@
 
-CREATE TABLE IF NOT EXISTS user_list (
+CREATE TABLE IF NOT EXISTS user_fishlist (
   user_id   INT PRIMARY KEY,
-  fish_list_names VARCHAR(50),
-  seen_status     BOOLEAN NOT NULL
+  user_name VARCHAR NOT NULL,
+  password_hash CHAR(60),
+  favorite_dive_sites INT[],
+  fish_list_id INT[],
+  fish_seen_id INT[]
 );
+
+-- Load test user data from CSV file
+COPY user_fishlist FROM '/docker-entrypoint-initdb.d/data/user-data.csv' DELIMITER ',' CSV HEADER;
 
 
 CREATE TABLE IF NOT EXISTS dive_sites (
@@ -13,8 +19,6 @@ CREATE TABLE IF NOT EXISTS dive_sites (
   site_name VARCHAR(255) NOT NULL,
   county_name VARCHAR(255) NOT NULL
 );
-
-SELECT pg_ls_dir('/docker-entrypoint-initdb.d/');
 
 -- Load data from CSV file
 COPY dive_sites FROM '/docker-entrypoint-initdb.d/data/Florida-Dive-Sites.csv' DELIMITER ',' CSV HEADER;
