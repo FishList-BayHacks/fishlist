@@ -35,3 +35,18 @@ CREATE TABLE IF NOT EXISTS counties (
 
 -- Load data from CSV file
 COPY counties FROM '/docker-entrypoint-initdb.d/data/florida-counties.csv' DELIMITER ',' CSV HEADER;
+
+
+CREATE TABLE IF NOT EXISTS fishes (
+    id INT PRIMARY KEY,
+    common_name VARCHAR NOT NULL,
+    scientific_name VARCHAR,
+    image_url VARCHAR,
+    county TEXT[] NOT NULL,
+    freshwater BOOLEAN,
+    saltwater BOOLEAN
+
+);
+
+-- Load data from CSV file
+COPY fishes FROM '/docker-entrypoint-initdb.d/data/florida_fishes.csv' DELIMITER ',' CSV HEADER;
