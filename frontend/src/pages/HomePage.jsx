@@ -128,9 +128,12 @@ const HomePage = () => {
 
   useEffect(() => {
     if (countiesInStore.length === 0) {
-      updateCounties(counties);
+      const countiesSorted = [...counties].sort((a, b) =>
+        a.county_name.localeCompare(b.county_name)
+      );
+      updateCounties(countiesSorted);
     }
-  }, [counties, counties.length, countiesInStore.length, updateCounties]);
+  }, [counties, countiesInStore.length]);
 
   return (
     <HomePageContainer>
