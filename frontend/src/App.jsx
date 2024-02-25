@@ -14,7 +14,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="*" element={<NotFoundPage />} />
-          <Route path="divesites" element={<DiveSitesPage />} />
+          <Route path="/divesites/:county" element={<DiveSitesPage />} />
         </Routes>
       </Router>
     </ThemeProvider>

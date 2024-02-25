@@ -13,9 +13,12 @@ import { FaStar } from "react-icons/fa";
 import { IoFish } from "react-icons/io5";
 import floridaCountyImage from "../assets/floridaMapDev.jpeg";
 import styled from "styled-components";
+import { useParams } from "react-router-dom";
 import { useState } from "react";
 
-export default function DiveSitesPage({ county = "Pinellas" }) {
+export default function DiveSitesPage() {
+  const { county } = useParams();
+
   const divefakedata = [
     { id: 1, name: "site 1 here", county: "pinellas" },
     { id: 2, name: "site 1 here", county: "pinellas" },

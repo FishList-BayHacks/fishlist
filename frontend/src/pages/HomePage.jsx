@@ -1,10 +1,11 @@
-import styled from "styled-components";
-import { Formik } from "formik";
+import Autocomplete from "@mui/material/Autocomplete";
+import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
+import { Formik } from "formik";
 import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import Autocomplete from "@mui/material/Autocomplete";
+import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 const HomePageContainer = styled.div`
   display: flex;
@@ -73,6 +74,11 @@ const FormCard = styled(Card)`
 `;
 
 const HomePage = () => {
+  const navigate = useNavigate();
+  const handleCountySelect = (countyName) => {
+    navigate(`/divesites/${countyName}`);
+  };
+
   return (
     <HomePageContainer>
       <BackgroundOverlay />
@@ -92,6 +98,7 @@ const HomePage = () => {
             return errors;
           }}
           onSubmit={(values, { setSubmitting }) => {
+            handleCountySelect(values.location);
             setTimeout(() => {
               alert(JSON.stringify(values, null, 2));
               setSubmitting(false);
