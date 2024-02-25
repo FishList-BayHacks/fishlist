@@ -12,9 +12,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import { IoFish } from "react-icons/io5";
 import floridaCountyImage from "../assets/floridaMapDev.jpeg";
 import styled from "styled-components";
+import { useDiveSites } from "../hooks/useDiveSites";
 import { useMainContext } from "../context/Context";
 import { useState } from "react";
-import { useDiveSites } from "../hooks/useDiveSites";
 
 export default function DiveSitesPage() {
   const { county } = useParams();
@@ -22,15 +22,12 @@ export default function DiveSitesPage() {
   const { counties } = useMainContext();
   const { diveSites, refetch } = useDiveSites(county);
 
-  // TODO USE EFFECT FETCHING DIVE SPOTS BY QUERY STRING THAT IS PASSED IN
-
   const [searchValue, setSearchValue] = useState(county);
   const [selectedCounty, setSelectedCounty] = useState(
     counties.find((cy) => cy.county_name === county)
   );
 
   const handleSearch = () => {
-    // TODO add api call to fetch new dive sites
     refetch(selectedCounty.county_name);
   };
 

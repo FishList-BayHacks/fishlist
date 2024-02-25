@@ -2,68 +2,29 @@ import { Box, Card, CardContent, CardMedia, Typography } from "@mui/material";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 import styled from "styled-components";
+import { useFishByCountyHook } from "../hooks/useFishByCountyHook";
+import { useMainContext } from "../context/Context";
 import { useParams } from "react-router-dom";
+import { useUserFish } from "../hooks/useUserFish";
 
 export default function DiveSiteFishPage() {
+  const { addFish, removeFish } = useUserFish();
+  const { usersSeenList, addFishIdToSeenList, removeFishIdOnSeenList } =
+    useMainContext();
   const { county } = useParams();
-  const userFishSeenList = [2];
-  // TODO FETCH FISH BY COUNTY
-  // FETCH USER INFO ON LOAD OF THE APP AND USE FISH SEEN LIST TO DETERMINE ICON
-  // AND SETUP FUNCTION TO INSERT THE ID OF FISH SEEN INTO ARRAY AND REMOVE FISH ID FROM ARRAY AND THEN UPDATE/DELETE THAT ID FROM DB
+  const { fishByCounty } = useFishByCountyHook(county);
+  console.log(fishByCounty);
 
-  // id,common_name,scientific_name,image_url,county,freshwater,saltwater,Url,description
-  const fishData = [
-    {
-      id: 1,
-      common_name: "fish 1",
-      scientific_name: "science name",
-      image_url:
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Hemichromis_bimaculatus1.jpg/120px-Hemichromis_bimaculatus1.jpg",
-      description: "Description here",
-    },
-    {
-      id: 2,
-      common_name: "fish 1",
-      scientific_name: "science name",
-      image_url:
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Hemichromis_bimaculatus1.jpg/120px-Hemichromis_bimaculatus1.jpg",
-      description: "Description here",
-    },
-    {
-      id: 3,
-      common_name: "fish 1",
-      scientific_name: "science name",
-      image_url:
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Hemichromis_bimaculatus1.jpg/120px-Hemichromis_bimaculatus1.jpg",
-      description: "Description here",
-    },
-    {
-      id: 3,
-      common_name: "fish 1",
-      scientific_name: "science name",
-      image_url:
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Hemichromis_bimaculatus1.jpg/120px-Hemichromis_bimaculatus1.jpg",
-      description: "Description here",
-    },
-    {
-      id: 3,
-      common_name: "fish 1",
-      scientific_name: "science name",
-      image_url:
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Hemichromis_bimaculatus1.jpg/120px-Hemichromis_bimaculatus1.jpg",
-      description: "Description here",
-    },
-    {
-      id: 3,
-      common_name: "fish 1",
-      scientific_name: "science name",
-      image_url:
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Hemichromis_bimaculatus1.jpg/120px-Hemichromis_bimaculatus1.jpg",
-      description: "Description here",
-    },
-  ];
-
-  const toggleSeen = () => {};
+  const toggleSeen = (id, seen) => {
+    if (seen) {
+      removeFishIdOnSeenList(id);
+      removeFish(id);
+      return;
+    } else {
+      addFishIdToSeenList(id);
+      addFish(id);
+    }
+  };
 
   return (
     <WholePageContainer>
@@ -76,9 +37,9 @@ export default function DiveSiteFishPage() {
         <DiscoverTitle>DISCOVER</DiscoverTitle>
         <CountyFishTitle>{county} County Fish</CountyFishTitle>
         <FishCardsContainer>
-          {fishData.map((fish) => {
+          {fishByCounty.map((fish) => {
             let seen = false;
-            if (userFishSeenList.includes(fish.id)) {
+            if (usersSeenList.includes(fish.id)) {
               seen = true;
             }
             return (
@@ -102,14 +63,14 @@ export default function DiveSiteFishPage() {
                       <FaEye
                         title="Seen"
                         size={25}
-                        onClick={() => toggleSeen(fish.id)}
+                        onClick={() => toggleSeen(fish.id, seen)}
                         style={{ cursor: "pointer" }}
                       />
                     ) : (
                       <FaEyeSlash
                         title="Unseen"
                         size={25}
-                        onClick={() => toggleSeen(fish.id)}
+                        onClick={() => toggleSeen(fish.id, seen)}
                         style={{ cursor: "pointer" }}
                       />
                     )}
@@ -156,7 +117,7 @@ const BackgroundOverlay = styled.div`
 `;
 
 const BackgroundVideo = styled.video`
-  position: absolute;
+  position: fixed;
   min-width: 100%;
   min-height: 100%;
   object-fit: cover;
