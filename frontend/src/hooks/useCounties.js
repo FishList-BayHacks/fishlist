@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export const useCounties = () => {
   const [counties, setCounties] = useState([]);
@@ -14,6 +14,7 @@ export const useCounties = () => {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
         const data = await response.json();
+        console.log(data, "data here");
         setCounties(data);
       } catch (err) {
         setError(err.message);

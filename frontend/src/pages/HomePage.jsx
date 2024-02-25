@@ -1,12 +1,14 @@
-import { useState, useEffect } from "react";
-import styled from "styled-components";
-import { Formik } from "formik";
+import { useEffect, useState } from "react";
+
+import Autocomplete from "@mui/material/Autocomplete";
+import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
+import { Formik } from "formik";
 import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import Autocomplete from "@mui/material/Autocomplete";
+import styled from "styled-components";
 import { useCounties } from "../hooks/useCounties";
+import { useMainContext } from "../context/Context";
 import { useNavigate } from "react-router-dom";
 
 const HomePageContainer = styled.div`
@@ -108,6 +110,7 @@ const FormCard = styled(Card)`
 `;
 
 const HomePage = () => {
+  const { counties: countiesInStore, updateCounties } = useMainContext();
   const [entered, setEntered] = useState(false);
   const { counties } = useCounties();
   const [countyArray, setCountyArray] = useState([]);
@@ -122,6 +125,12 @@ const HomePage = () => {
       .sort((a, b) => a.localeCompare(b));
     setCountyArray(countyNames);
   }, [counties]);
+
+  useEffect(() => {
+    if (countiesInStore.length === 0) {
+      updateCounties(counties);
+    }
+  }, [counties, counties.length, countiesInStore.length, updateCounties]);
 
   return (
     <HomePageContainer>

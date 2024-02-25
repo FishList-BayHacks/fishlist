@@ -12,11 +12,13 @@ import { useNavigate, useParams } from "react-router-dom";
 import { IoFish } from "react-icons/io5";
 import floridaCountyImage from "../assets/floridaMapDev.jpeg";
 import styled from "styled-components";
+import { useMainContext } from "../context/Context";
 import { useState } from "react";
 
 export default function DiveSitesPage() {
   const { county } = useParams();
   const navigate = useNavigate();
+  const { counties } = useMainContext();
 
   const divefakedata = [
     { id: 1, name: "site 1 here", county: "pinellas" },
@@ -24,16 +26,10 @@ export default function DiveSitesPage() {
     { id: 3, name: "site 1 here", county: "pinellas" },
   ];
   // TODO USE EFFECT FETCHING DIVE SPOTS BY QUERY STRING THAT IS PASSED IN
-  const counties = [
-    { label: "Pinellas", id: 1 },
-    { label: "Hillsborough", id: 2 },
-    { label: "Pasco", id: 3 },
-    // TODO THESE SHOULD EXIST IN CONTEXT FETCHED ON LOAD OF APP
-  ];
 
   const [searchValue, setSearchValue] = useState(county);
   const [selectedCounty, setSelectedCounty] = useState(
-    counties.find((cy) => cy.label === county)
+    counties.find((cy) => cy.county_name === county)
   );
 
   const handleSearch = () => {
@@ -58,7 +54,7 @@ export default function DiveSitesPage() {
             }}
             id="controllable-states-demo"
             options={counties}
-            getOptionLabel={(option) => option.label}
+            getOptionLabel={(option) => option.county_name}
             renderInput={(params) => (
               <TextField
                 placeholder="Search for a county..."
@@ -98,7 +94,7 @@ export default function DiveSitesPage() {
               <TopLine variant="h4">Diving Areas</TopLine>
               {/* TODO CHECK IF WE USING LABEL OR NAME ETC */}
               <BottomLine variant="h4">
-                of {selectedCounty.label} County
+                of {selectedCounty.county_name} County
               </BottomLine>
             </TitleContainer>
           </DiveSitesHeader>
