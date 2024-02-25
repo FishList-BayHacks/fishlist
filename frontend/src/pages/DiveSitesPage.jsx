@@ -160,7 +160,7 @@ const BackgroundColorDiv = styled.div`
   position: relative;
   width: 100vw;
   height: 100vh;
-  background-color: #add8f4;
+  background-color: #a2d9f6;
   z-index: 0;
 `;
 
