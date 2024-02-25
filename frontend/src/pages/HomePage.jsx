@@ -1,3 +1,4 @@
+import { useState } from "react";
 import styled from "styled-components";
 import { Formik } from "formik";
 import Card from "@mui/material/Card";
@@ -25,6 +26,25 @@ const BackgroundOverlay = styled.div`
   z-index: 1;
 `;
 
+const Banner = styled.div`
+  position: fixed;
+  height: 100%;
+  right: 0;
+  font-size: 58px; /* Adjust the font size as needed */
+  background-color: #acfeff10;
+  color: white;
+  text-transform: uppercase;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around; /* Distribute space evenly */
+
+  span {
+    display: block; /* Each letter will take up its own line */
+    text-align: center;
+  }
+`;
+
 const BackgroundVideo = styled.video`
   position: absolute;
   min-width: 100%;
@@ -48,6 +68,18 @@ const Content = styled.div`
     align-items: center;
     margin-top: 0;
   }
+
+  .button-enter {
+    color: #022a39;
+  }
+`;
+
+const ButtonContainer = styled.div`
+  transition: opacity 0.5s ease-out;
+
+  &.fade-out {
+    opacity: 0;
+  }
 `;
 
 const FormCard = styled(Card)`
@@ -55,6 +87,7 @@ const FormCard = styled(Card)`
   max-width: 430px;
   margin-top: 20px;
   text-align: center;
+  animation: fadeIn 5s;
 
   .button {
     margin-top: 20px;
@@ -73,6 +106,8 @@ const FormCard = styled(Card)`
 `;
 
 const HomePage = () => {
+  const [entered, setEntered] = useState(false);
+
   return (
     <HomePageContainer>
       <BackgroundOverlay />
@@ -81,70 +116,89 @@ const HomePage = () => {
         Your browser does not support the video tag.
       </BackgroundVideo>
       <Content>
-        {/* <h1 className="title">Welcome to FishList</h1> */}
-        <Formik
-          initialValues={{ location: "" }}
-          validate={(values) => {
-            const errors = {};
-            if (!values.location) {
-              errors.location = "Required";
-            }
-            return errors;
-          }}
-          onSubmit={(values, { setSubmitting }) => {
-            setTimeout(() => {
-              alert(JSON.stringify(values, null, 2));
-              setSubmitting(false);
-            }, 400);
-          }}
-        >
-          {({
-            values,
-            errors,
-            touched,
-            handleBlur,
-            handleSubmit,
-            isSubmitting,
-            setFieldValue,
-          }) => (
-            <FormCard>
-              <CardContent>
-                <h3>Where do you plan to dive?</h3>
-                <form className="form" onSubmit={handleSubmit}>
-                  <Autocomplete
-                    options={["Hillsborough", "Pasco"]} // Add more locations as needed
-                    value={values.location}
-                    onChange={(event, newValue) => {
-                      setFieldValue("location", newValue);
-                    }}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        label="County"
-                        name="location"
-                        onBlur={handleBlur}
-                        error={touched.location && Boolean(errors.location)}
-                        helperText={touched.location && errors.location}
-                        margin="normal"
-                        fullWidth
-                      />
-                    )}
-                  />
-                  <Button
-                    type="submit"
-                    variant="contained"
-                    color="primaryButton"
-                    disabled={isSubmitting}
-                    fullWidth
-                    className="button"
-                  >
-                    Dive
-                  </Button>
-                </form>
-              </CardContent>
-            </FormCard>
-          )}
-        </Formik>
+        {!entered && (
+          <ButtonContainer className={entered ? "fade-out" : ""}>
+            <Button
+              variant="contained"
+              color="primaryButton"
+              fullWidth
+              className="button-enter"
+              onClick={() => setEntered(true)}
+            >
+              Dive
+            </Button>
+          </ButtonContainer>
+        )}
+        {entered && (
+          <Formik
+            initialValues={{ location: "" }}
+            validate={(values) => {
+              const errors = {};
+              if (!values.location) {
+                errors.location = "Required";
+              }
+              return errors;
+            }}
+            onSubmit={(values, { setSubmitting }) => {
+              setTimeout(() => {
+                alert(JSON.stringify(values, null, 2));
+                setSubmitting(false);
+              }, 400);
+            }}
+          >
+            {({
+              values,
+              errors,
+              touched,
+              handleBlur,
+              handleSubmit,
+              isSubmitting,
+              setFieldValue,
+            }) => (
+              <FormCard>
+                <CardContent>
+                  <h3>Where do you plan to dive?</h3>
+                  <form className="form" onSubmit={handleSubmit}>
+                    <Autocomplete
+                      options={["Location1", "Location2"]}
+                      value={values.location}
+                      onChange={(event, newValue) => {
+                        setFieldValue("location", newValue);
+                      }}
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          label="Location"
+                          name="location"
+                          onBlur={handleBlur}
+                          error={touched.location && Boolean(errors.location)}
+                          helperText={touched.location && errors.location}
+                          margin="normal"
+                          fullWidth
+                        />
+                      )}
+                    />
+                    <Button
+                      type="submit"
+                      variant="contained"
+                      color="primaryButton"
+                      disabled={isSubmitting}
+                      fullWidth
+                      className="button"
+                    >
+                      Dive
+                    </Button>
+                  </form>
+                </CardContent>
+              </FormCard>
+            )}
+          </Formik>
+        )}
+        <Banner>
+          {Array.from("FLORIDA").map((letter) => (
+            <span key={letter}>{letter}</span>
+          ))}
+        </Banner>
       </Content>
     </HomePageContainer>
   );
