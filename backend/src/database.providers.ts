@@ -12,7 +12,8 @@ export const databaseProviders = [
                 password: 'password',
                 database: 'fishlist',
                 entities: [
-                    __dirname + '/../**/*.entity{.ts,.js}',
+                    "dist/**/*.entity.js"
+                    //__dirname + '/../**/*.entity{.ts,.js}',
                 ],
                 synchronize: true
             });

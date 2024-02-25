@@ -6,7 +6,7 @@ export class Counties {
     id: number;
 
     @Column({ length: 255})
-    country_name: string;
+    county_name: string;
 
     @Column({ length: 255})
     name_ascii: string;
@@ -15,18 +15,18 @@ export class Counties {
     type: string;
 
     @Column('int')
-    country_fips: number;
+    county_fips: number;
 
-    @Column({ length: 2})
+    @Column({ length: 2, nullable: true})
     state_id: string;
 
     @Column({ length: 100})
     state_name: string;
 
-    @Column('int')
+    @Column({ type: 'int', nullable: true})
     lat: number;
 
-    @Column('int')
+    @Column({ type: 'int', nullable: true})
     lon: number;
 
     @Column('int')
