@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Formik } from "formik";
 import Card from "@mui/material/Card";
@@ -6,6 +6,8 @@ import CardContent from "@mui/material/CardContent";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Autocomplete from "@mui/material/Autocomplete";
+import { useCounties } from "../hooks/useCounties";
+import { useNavigate } from "react-router-dom";
 
 const HomePageContainer = styled.div`
   display: flex;
@@ -107,6 +109,19 @@ const FormCard = styled(Card)`
 
 const HomePage = () => {
   const [entered, setEntered] = useState(false);
+  const { counties } = useCounties();
+  const [countyArray, setCountyArray] = useState([]);
+  const navigate = useNavigate();
+  const handleCountySelect = (countyName) => {
+    navigate(`/divesites/${countyName}`);
+  };
+
+  useEffect(() => {
+    const countyNames = counties
+      .map((county) => county.county_name)
+      .sort((a, b) => a.localeCompare(b));
+    setCountyArray(countyNames);
+  }, [counties]);
 
   return (
     <HomePageContainer>
@@ -141,7 +156,7 @@ const HomePage = () => {
             }}
             onSubmit={(values, { setSubmitting }) => {
               setTimeout(() => {
-                alert(JSON.stringify(values, null, 2));
+                handleCountySelect(values.location);
                 setSubmitting(false);
               }, 400);
             }}
@@ -160,7 +175,7 @@ const HomePage = () => {
                   <h3>Where do you plan to dive?</h3>
                   <form className="form" onSubmit={handleSubmit}>
                     <Autocomplete
-                      options={["Location1", "Location2"]}
+                      options={countyArray}
                       value={values.location}
                       onChange={(event, newValue) => {
                         setFieldValue("location", newValue);
