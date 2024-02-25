@@ -10,6 +10,7 @@ import styled from "styled-components";
 import { useCounties } from "../hooks/useCounties";
 import { useMainContext } from "../context/Context";
 import { useNavigate } from "react-router-dom";
+import { useUser } from "../hooks/useUser";
 
 const HomePageContainer = styled.div`
   display: flex;
@@ -110,7 +111,11 @@ const FormCard = styled(Card)`
 `;
 
 const HomePage = () => {
-  const { counties: countiesInStore, updateCounties } = useMainContext();
+  const {
+    counties: countiesInStore,
+    updateCounties,
+    initializeUserSeenFishList,
+  } = useMainContext();
   const [entered, setEntered] = useState(false);
   const { counties } = useCounties();
   const [countyArray, setCountyArray] = useState([]);
@@ -118,6 +123,8 @@ const HomePage = () => {
   const handleCountySelect = (countyName) => {
     navigate(`/divesites/${countyName}`);
   };
+  const { user } = useUser();
+  initializeUserSeenFishList(user?.fish_seen_id);
 
   useEffect(() => {
     const countyNames = counties
