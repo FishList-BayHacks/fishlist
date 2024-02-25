@@ -112,7 +112,7 @@ const HomePage = () => {
                 <h3>Where do you plan to dive?</h3>
                 <form className="form" onSubmit={handleSubmit}>
                   <Autocomplete
-                    options={["Location1", "Location2"]} // Add more locations as needed
+                    options={["Hillsborough", "Pasco"]} // Add more locations as needed
                     value={values.location}
                     onChange={(event, newValue) => {
                       setFieldValue("location", newValue);
@@ -120,7 +120,7 @@ const HomePage = () => {
                     renderInput={(params) => (
                       <TextField
                         {...params}
-                        label="Location"
+                        label="County"
                         name="location"
                         onBlur={handleBlur}
                         error={touched.location && Boolean(errors.location)}
