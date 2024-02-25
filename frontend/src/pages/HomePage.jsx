@@ -11,6 +11,7 @@ import { useCounties } from "../hooks/useCounties";
 import { useMainContext } from "../context/Context";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../hooks/useUser";
+import { useFish } from "../hooks/useFish";
 
 const HomePageContainer = styled.div`
   display: flex;
@@ -115,6 +116,7 @@ const HomePage = () => {
     counties: countiesInStore,
     updateCounties,
     initializeUserSeenFishList,
+    updateFish,
   } = useMainContext();
   const [entered, setEntered] = useState(false);
   const { counties } = useCounties();
@@ -125,6 +127,8 @@ const HomePage = () => {
   };
   const { user } = useUser();
   initializeUserSeenFishList(user?.fish_seen_id);
+  const { fishData } = useFish();
+  updateFish(fishData);
 
   useEffect(() => {
     const countyNames = counties
