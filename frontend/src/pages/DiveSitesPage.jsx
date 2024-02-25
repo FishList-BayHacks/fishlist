@@ -15,6 +15,8 @@ import styled from "styled-components";
 import { useDiveSites } from "../hooks/useDiveSites";
 import { useMainContext } from "../context/Context";
 import { useState } from "react";
+import { useDiveSites } from "../hooks/useDiveSites";
+import { NavBar } from "../component/NavBar";
 
 export default function DiveSitesPage() {
   const { county } = useParams();
@@ -32,95 +34,98 @@ export default function DiveSitesPage() {
   };
 
   return (
-    <BackgroundColorDiv>
-      <BackgroundContainer />
-      <StyledContainer>
-        <SearchBarDiv>
-          <Autocomplete
-            disableClearable
-            sx={{ width: "80%" }}
-            value={selectedCounty}
-            onChange={(event, newValue) => {
-              setSelectedCounty(newValue);
-            }}
-            inputValue={searchValue}
-            onInputChange={(event, newInputValue) => {
-              setSearchValue(newInputValue);
-            }}
-            id="controllable-states-demo"
-            options={counties}
-            getOptionLabel={(option) => option.county_name}
-            renderInput={(params) => (
-              <TextField
-                placeholder="Search for a county..."
-                {...params}
-                label="county"
-                variant="filled"
-                sx={{
-                  borderRadius: "8px",
-                  "& .MuiFilledInput-root": {
-                    backgroundColor: "#E6F2F2", // For the input field background
-                    "&:hover": {
-                      backgroundColor: "#E6F2F2", // Maintain bg color on hover
+    <>
+      <NavBar />
+      <BackgroundColorDiv>
+        <BackgroundContainer />
+        <StyledContainer>
+          <SearchBarDiv>
+            <Autocomplete
+              disableClearable
+              sx={{ width: "80%" }}
+              value={selectedCounty}
+              onChange={(event, newValue) => {
+                setSelectedCounty(newValue);
+              }}
+              inputValue={searchValue}
+              onInputChange={(event, newInputValue) => {
+                setSearchValue(newInputValue);
+              }}
+              id="controllable-states-demo"
+              options={counties}
+              getOptionLabel={(option) => option.county_name}
+              renderInput={(params) => (
+                <TextField
+                  placeholder="Search for a county..."
+                  {...params}
+                  label="county"
+                  variant="filled"
+                  sx={{
+                    borderRadius: "8px",
+                    "& .MuiFilledInput-root": {
+                      backgroundColor: "#E6F2F2", // For the input field background
+                      "&:hover": {
+                        backgroundColor: "#E6F2F2", // Maintain bg color on hover
+                      },
+                      "&.Mui-focused": {
+                        backgroundColor: "#E6F2F2", // Maintain bg color when focused
+                      },
                     },
-                    "&.Mui-focused": {
-                      backgroundColor: "#E6F2F2", // Maintain bg color when focused
+                    "& .MuiInputLabel-filled": {
+                      backgroundColor: "#E6F2F2", // For the label background
                     },
-                  },
-                  "& .MuiInputLabel-filled": {
-                    backgroundColor: "#E6F2F2", // For the label background
-                  },
-                  '& .MuiAutocomplete-inputRoot[class*="MuiFilledInput-root"] .MuiAutocomplete-input':
-                    {
-                      backgroundColor: "#E6F2F2", // For the Autocomplete input
-                    },
-                }}
-              />
+                    '& .MuiAutocomplete-inputRoot[class*="MuiFilledInput-root"] .MuiAutocomplete-input':
+                      {
+                        backgroundColor: "#E6F2F2", // For the Autocomplete input
+                      },
+                  }}
+                />
+              )}
+              PaperComponent={({ children }) => (
+                <Paper style={{ backgroundColor: "#E6F2F2" }}>{children}</Paper> // For the dropdown background
+              )}
+            />
+            <StyledButton onClick={() => handleSearch()}>Search</StyledButton>
+          </SearchBarDiv>
+          <DiveSitesContainer>
+            <DiveSitesHeader>
+              <TitleContainer>
+                <TopLine variant="h4">Diving Areas</TopLine>
+                <BottomLine variant="h4">
+                  of {selectedCounty.county_name} County
+                </BottomLine>
+              </TitleContainer>
+            </DiveSitesHeader>
+            {diveSites.map((site) => {
+              return (
+                <StyledCard
+                  onClick={() => {
+                    navigate(
+                      `/divesite-fish/${selectedCounty.county_name}/${site.id}`
+                    );
+                  }}
+                  key={site.id}
+                >
+                  <DiveSiteNameDiv>
+                    <IoFish size={24} />
+                    <ListItemText
+                      sx={{ color: "#E6F2F2" }}
+                      primary={site.site_name}
+                    />
+                  </DiveSiteNameDiv>
+                </StyledCard>
+              );
+            })}
+            {diveSites.length === 0 && (
+              <p className="no-data">
+                Looks like the fish are playing hide and seek! No dive sites
+                found in this county. Keep exploring!
+              </p>
             )}
-            PaperComponent={({ children }) => (
-              <Paper style={{ backgroundColor: "#E6F2F2" }}>{children}</Paper> // For the dropdown background
-            )}
-          />
-          <StyledButton onClick={() => handleSearch()}>Search</StyledButton>
-        </SearchBarDiv>
-        <DiveSitesContainer>
-          <DiveSitesHeader>
-            <TitleContainer>
-              <TopLine variant="h4">Diving Areas</TopLine>
-              <BottomLine variant="h4">
-                of {selectedCounty.county_name} County
-              </BottomLine>
-            </TitleContainer>
-          </DiveSitesHeader>
-          {diveSites.map((site) => {
-            return (
-              <StyledCard
-                onClick={() => {
-                  navigate(
-                    `/divesite-fish/${selectedCounty.county_name}/${site.id}`
-                  );
-                }}
-                key={site.id}
-              >
-                <DiveSiteNameDiv>
-                  <IoFish size={24} />
-                  <ListItemText
-                    sx={{ color: "#E6F2F2" }}
-                    primary={site.site_name}
-                  />
-                </DiveSiteNameDiv>
-              </StyledCard>
-            );
-          })}
-          {diveSites.length === 0 && (
-            <p className="no-data">
-              Looks like the fish are playing hide and seek! No dive sites found
-              in this county. Keep exploring!
-            </p>
-          )}
-        </DiveSitesContainer>
-      </StyledContainer>
-    </BackgroundColorDiv>
+          </DiveSitesContainer>
+        </StyledContainer>
+      </BackgroundColorDiv>
+    </>
   );
 }
 
