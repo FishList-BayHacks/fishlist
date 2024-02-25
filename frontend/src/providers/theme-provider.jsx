@@ -76,6 +76,37 @@ const theme = createTheme({
         },
       },
     },
+    MuiFormLabel: {
+      styleOverrides: {
+        root: {
+          fontWeight: "900",
+        },
+      },
+    },
+    MuiInputLabel: {
+      styleOverrides: {
+        shrink: {
+          transform: "translate(8px, -18px) scale(0.75)",
+          color: "#000",
+          background: "#ACFEFF",
+          padding: "0px 5px 4px 5px",
+          borderRadius: "10px",
+          borderTop: "1.5px solid rgba(0, 0, 0, 0.23)",
+          borderRight: "1.5px solid rgba(0, 0, 0, 0.23)",
+          borderLeft: "1.5px solid rgba(0, 0, 0, 0.23)",
+          "&.Mui-focused": {
+            borderTop: "2px solid #000",
+            borderRight: "2px solid #000",
+            borderLeft: "2px solid #000",
+          },
+          "&.Mui-error": {
+            borderTop: "2px solid #d32f2f",
+            borderRight: "2px solid #d32f2f",
+            borderLeft: "2px solid #d32f2f",
+          },
+        },
+      },
+    },
   },
   // Add other theme customizations (typography, breakpoints, etc.) here
 });
